@@ -17,7 +17,7 @@ class Solution {
             }
                 mp.put(curr, i);
         }
-        return new int[] {-1 -1};
+        return new int[] {-1 ,-1};
         
     }
 }
