@@ -16,6 +16,23 @@ class Solution {
         int [][] dp = new int [rows][cols];
         for(int i = 0; i < rows; ++i) Arrays.fill(dp[i], -1);
 
-        return solve(grid, rows-1, cols-1, dp);
+        //return solve(grid, rows-1, cols-1, dp);
+        int down = 0, right = 0;
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(i == 0 && j == 0){
+                    dp[i][j] = grid[i][j];
+                    continue;
+                } 
+                if(i > 0) 
+                     down = grid[i][j] + dp[i-1][j];
+                else  down = Integer.MAX_VALUE;
+                if(j > 0) 
+                     right = grid[i][j] + dp[i][j-1];
+                else  right = Integer.MAX_VALUE;
+                dp[i][j] = Math.min(down, right);
+            }
+        }
+        return dp[rows - 1][cols -1];
     }
 }
