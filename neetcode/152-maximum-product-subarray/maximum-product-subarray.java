@@ -13,16 +13,18 @@ class Solution {
         //p tracks the max in maxi, q tracks the min in minimum
         int p = nums[0], q = nums[0], ans = nums[0];
         for(int i = 1; i < n; ++i ){
-            maxi[i] = Math.max(nums[i], Math.max(p * nums[i], q * nums[i]));
-            mini[i] = Math.min(nums[i], Math.min(p * nums[i], q * nums[i]));
+            int pp = p;
+            int qq = q;
+            p = Math.max(nums[i], Math.max(pp * nums[i], qq * nums[i]));
+            q = Math.min(nums[i], Math.min(pp * nums[i], qq * nums[i]));
             
-            p = maxi[i];
-            q = mini[i];
-            System.out.println(p);
-            System.out.println(q);
+            // p = maxi[i];
+            // q = mini[i];
+            // System.out.println(p);
+            // System.out.println(q);
 
             ans = Math.max(ans, p);
-            System.out.println(ans + "*");
+            //System.out.println(ans + "*");
 
         }
         return ans;
