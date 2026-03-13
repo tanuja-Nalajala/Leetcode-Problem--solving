@@ -4,10 +4,22 @@ class Solution {
 
         visited[i][j] = true;
         //down, right
-        DFS(grid, i+1, j, visited, m, n);
-        DFS(grid, i, j+1, visited, m, n);
-        DFS(grid, i-1, j,visited, m, n);
-        DFS(grid, i, j-1, visited, m, n);
+        // DFS(grid, i+1, j, visited, m, n);
+        // DFS(grid, i, j+1, visited, m, n);
+        // DFS(grid, i-1, j,visited, m, n);
+        // DFS(grid, i, j-1, visited, m, n);
+        int [][] dir = {
+            {1,0},
+            {0,1},
+            {-1,0},
+            {0,-1}
+        };
+
+        for(int [] d : dir){
+            int nr = i + d[0];
+            int nc = j + d[1];
+            DFS(grid, nr, nc, visited, m, n);
+        }
     }
     public int numIslands(char[][] grid) {
         int m = grid.length;
