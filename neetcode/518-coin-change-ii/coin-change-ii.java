@@ -1,7 +1,7 @@
 class Solution {
     int solve(int []coins, int amount, int ind, int[][]dp){
         if(ind == 0){
-            if( amount % coins[0] == 0) return 1;
+            if(amount % coins[0] == 0) return 1;
             else return 0; 
         }
         if(dp[ind][amount] != -1) return dp[ind][amount];
@@ -15,8 +15,24 @@ class Solution {
         
         int n = coins.length;
         int[][] dp = new int [n][amount+ 1];
-        for(int i  = 0; i < n; ++i)
-            Arrays.fill(dp[i], -1);
-        return solve(coins, amount, n-1, dp);
+        // for(int i  = 0; i < n; ++i)
+        //     Arrays.fill(dp[i], -1);
+        // return solve(coins, amount, n-1, dp);
+
+        for(int  i = 0 ; i <= amount; ++i){
+            if(i % coins[0] == 0) dp[0][i] = 1;
+        }
+
+        for(int i = 1; i < n; ++i){
+            for(int j = 0; j <= amount; ++j){
+                int notPick = dp[i-1][j];
+                int pick = 0;
+                if(coins[i] <= j) pick = dp[i][j - coins[i]];
+                dp[i][j] = pick + notPick;
+            }
+        }
+        return dp[n-1][amount];
+
+
     }
 }
