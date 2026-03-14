@@ -22,8 +22,23 @@ class Solution {
         int n = prices.length;
 
         int [][] dp = new int [n+2][2];
-        for(int i = 0; i < n; ++i) Arrays.fill(dp[i], -1);
+        // for(int i = 0; i < n; ++i) Arrays.fill(dp[i], -1);
 
-        return solve(prices, 0,1, n, dp);
+        //return solve(prices, 0,1, n, dp);
+        for(int i = n-1; i >= 0; --i){
+            // for(int buy = 0; buy <= 1; ++buy){
+            //     if(buy == 1){
+            //         dp[i][buy] = Math.max( -prices[i] + dp[i + 1][0], 0 + dp[i + 1][1] );
+            //      }
+            //     else{
+            //         dp[i][buy] = Math.max( +prices[i] + dp[i + 2][1], 0 + dp[i + 1][0] ); 
+            //     }
+            // }
+            
+            dp[i][1] = Math.max( -prices[i] + dp[i + 1][0], 0 + dp[i + 1][1] );
+            dp[i][0] = Math.max( +prices[i] + dp[i + 2][1], 0 + dp[i + 1][0] );     
+        }
+        return dp[0][1];
     }
+
 }
