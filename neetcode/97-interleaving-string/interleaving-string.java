@@ -26,10 +26,30 @@ class Solution {
         //base case
         //i >= m && j >= m return true;
 
-         int [][] dp = new int[m + 1][n + 1];
-        for(int i = 0; i <= m; ++i) Arrays.fill(dp[i], -1);
+         //int [][] dp = new int[m + 1][n + 1];
 
-        int ans = solve(s1, s2, s3, 0,0, m, n, dp);
-        return (ans == 1) ? true : false;
+        // for(int i = 0; i <= m; ++i) Arrays.fill(dp[i], -1);
+
+        // int ans = solve(s1, s2, s3, 0,0, m, n, dp);
+        // return (ans == 1) ? true : false;
+
+        //base case
+
+        boolean [][] dp = new boolean[m + 1][n + 1];
+        dp[m][n] = true;
+
+        for(int i = m; i >= 0; --i){
+            for(int j = n; j >= 0; --j){
+                if(i == m && j == n) continue;
+                int k = i + j;
+                boolean p = false,q = false;
+                if(i < m && s1.charAt(i) == s3.charAt(k)) 
+                    p = dp[i + 1][j];
+                if(j < n && s2.charAt(j) == s3.charAt(k)) 
+                    q = dp[i][j + 1]; 
+                dp[i][j] = p || q;   
+            }
+        }
+        return dp[0][0];
     }
 }
