@@ -29,7 +29,30 @@ class Solution {
         int n = word2.length();
 
         int[][] dp = new int[m+1][n+1];
-        for(int i = 0; i <=m; ++i) Arrays.fill(dp[i], -1);
-        return solve(word1, word2, m-1, n-1, dp);   
+        // for(int i = 0; i <=m; ++i) Arrays.fill(dp[i], -1);
+        // return solve(word1, word2, m-1, n-1, dp);   
+
+        for(int j = 0; j <= n; ++j)  
+            dp[0][j] = j ;
+        
+        for(int i = 0; i <= m; ++i){
+            dp[i][0] = i ;
+        }
+        int match = 0, insert = 0, replace = 0, delete  = 0, notMatch = 0;
+        for(int i = 1; i <= m; i++){
+            for(int j = 1; j <= n; ++j){
+                if(word1.charAt(i - 1) == word2.charAt(j - 1))
+                    dp[i][j] = dp[i-1][j-1];
+                else{
+            //3 options
+                        insert = 1 + dp[i][j-1];
+                        replace = 1 + dp[i-1][j-1];;
+                        delete = 1 + dp[i-1][j];;
+                    dp[i][j] = Math.min(insert, Math.min(replace, delete));
+                }
+            }
+        }
+        return dp[m][n];
+
     }
 }
