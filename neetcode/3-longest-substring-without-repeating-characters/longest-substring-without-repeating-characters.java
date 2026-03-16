@@ -6,7 +6,10 @@ class Solution {
         for(int i = 0; i < n; ++i){
             
             if(mp.containsKey(s.charAt(i))){
-                j = Math.max(j, mp.get(s.charAt(i)) + 1);
+                int last_index = mp.get(s.charAt(i));
+                if(last_index >= j){
+                    j = last_index + 1;
+                }
             }
             mp.put(s.charAt(i), i);
             maxLength = Math.max(maxLength, i-j+1);
