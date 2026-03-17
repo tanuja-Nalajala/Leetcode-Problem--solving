@@ -16,11 +16,19 @@ class Solution {
 
         //at each index -> i can chose to buy(if my buy ois allowed)
         //or i can chose to sell (if buy is already done)
-        int [][] dp = new int[n][2];
-        for(int i = 0; i < n; ++i)
-            Arrays.fill(dp[i], -1);
+        int [][] dp = new int[n+1][2];
+        // for(int i = 0; i < n; ++i)
+        //     Arrays.fill(dp[i], -1);
 
         //buy = 1 ==> buy is allowed
-        return solve(prices, 0, 1, dp, n);
+        //return solve(prices, 0, 1, dp, n);
+        //SC: 2n + n TC: 2n
+
+        for(int i = n-1; i >= 0; --i){
+            dp[i][1]  = Math.max(   -prices[i] + dp[i + 1][0] , 0 + dp[i + 1][1] );
+        
+            dp[i][0] = Math.max( prices[i] + dp[i + 1][1],  0 + dp[i + 1][0] );
+        }
+        return dp[0][1];
     }
 }
