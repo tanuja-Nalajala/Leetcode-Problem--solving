@@ -16,12 +16,22 @@ class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
 
-        int[][][]dp = new int[n][2][3];
-        for(int i = 0; i < n;  ++i){
-            for(int j = 0; j < 2; ++j)
-            Arrays.fill(dp[i][j], -1);
+        int[][][]dp = new int[n+1][2][3];
+        // for(int i = 0; i < n;  ++i){
+        //     for(int j = 0; j < 2; ++j)
+        //     Arrays.fill(dp[i][j], -1);
+        // }
+        // //buy == 1 ==>buying is allowed
+        // return solve(prices, 0, 1, dp, n, 2);
+
+        for(int i = n-1; i >= 0; --i){
+            for(int j = 1; j < 3; ++j){
+                dp[i][1][j] = Math.max( -prices[i] + dp[i + 1][0][j] , 0 + dp[i+1][1][j]);
+                dp[i][0][j] = Math.max( prices[i] + dp[i + 1][1][j-1] ,  0 + dp[i + 1][0][j] );
+            }
         }
-        //buy == 1 ==>buying is allowed
-        return solve(prices, 0, 1, dp, n, 2);
+        return dp[0][1][2];
     }
+
+    
 }
