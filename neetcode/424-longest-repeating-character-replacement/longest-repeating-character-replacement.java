@@ -3,7 +3,7 @@ class Solution {
         int n = s.length();
 
         int l = 0, r = 0, length = 0, max_freq = 0, start_idx = 0, max_length = 0;
-        int []hash = new int[256];
+        int []hash = new int[26];
         while(r < n){
             char rc = s.charAt(r);
             hash[rc - 'A']++;
@@ -18,8 +18,7 @@ class Solution {
                 }
                 l++;
             }
-            if((r - l + 1) - max_freq <= k)
-                max_length = Math.max(max_length, r - l + 1);
+            max_length = Math.max(max_length, r - l + 1);
             
         r++;
         }
