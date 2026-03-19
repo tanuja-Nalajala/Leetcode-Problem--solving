@@ -1,7 +1,7 @@
 class Solution {
     int solve(int[]piles, int ind, int last, int n, int [][]dp){
         if(ind > last ) return 0;
-
+        if(ind == last) return piles[ind];
         if(dp[ind][last] != -1) return dp[ind][last];
 
         int choiceOne = 0, choiceTwo = 0;
@@ -16,11 +16,31 @@ class Solution {
         int n = piles.length;
 
         int [][] dp = new int[n][n];
-        for(int i = 0; i < n; ++i) Arrays.fill(dp[i], -1);
+        //for(int i = 0; i < n; ++i) Arrays.fill(dp[i], -1);
+        
+        // int ans = solve(piles, 0, n-1, n, dp); 
+        // return (ans > 0) ? true : false;
 
-        int ans = solve(piles, 0, n-1, n, dp); 
-        return (ans > 0) ? true : false;
-       
+        //piles length = 1;
+        for(int i = 0; i < n; ++i) 
+           dp[i][i] = piles[i];
+
+        //piles length >= 2
+        for(int length = 2; length <= n; ++length){
+            for(int i = 0; i + length - 1 < n; ++i ){
+                int j = i + length - 1;
+                dp [i][j] = Math.max( piles[i] - dp[i + 1][j],  piles[j] - dp[i][j - 1] );
+            }
+        }
+        return dp[0][n-1] > 0;
+
+        
+        
+        
+        
+        
+        
+        
         //two pointer = Greedy doesnot work 
         //==>piles = [3,2,10,4]
         // int i = 0, j = n-1;
