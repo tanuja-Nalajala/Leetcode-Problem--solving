@@ -7,6 +7,8 @@ class Solution {
         Map<Character, Integer> mp = new HashMap<>();
         while(r < n){
             char rc = s.charAt(r);
+            //is curr char is already seen && is it in the current window(l to r)
+            //if no => curr char is not duplicate in the current window
             if(mp.containsKey(rc) == true && mp.get(rc) >= l){
                 //i found a duplicate character
                 //need to update my window
