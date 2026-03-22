@@ -10,12 +10,12 @@ class Solution {
                 return mid;
             //check for sorted half
             if(nums[mid] <= nums[r] ){
-                if(target <= nums[r] && target >= nums[mid])
+                if(target <= nums[r] && target > nums[mid])
                     l = mid + 1;
                 else r = mid - 1;
             }
             else{
-                if(target >= nums[l] && target <= nums[mid])
+                if(target >= nums[l] && target < nums[mid])
                     r = mid -1;
                 else
                     l = mid + 1;
