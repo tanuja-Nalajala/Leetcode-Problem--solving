@@ -13,8 +13,11 @@ class TimeMap {
         if(mp.containsKey(key) == false) return "";
 
         TreeMap<Integer, String> tm = mp.get(key);
-        Map.Entry<Integer, String> entry = tm.floorEntry(timestamp);
-        return (entry == null)? "" : entry.getValue();
+        // Map.Entry<Integer, String> entry = tm.floorEntry(timestamp);
+        // return (entry == null)? "" : entry.getValue();
+
+        Integer entry = tm.floorKey(timestamp);
+        return (entry == null) ? "" : tm.get(entry);
     }
 }
 
