@@ -1,28 +1,43 @@
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        //so here i need to add elements from the front and need to remove from back
-        //dequeue store indexes
-        Deque<Integer> dq = new ArrayDeque<>();
+        
+        //return max element found in each window
+        //need to delete elements from end and add elements from start
+        //dll : as montonic decreasing dq: storing indices
+        //dll : 
+        /*
+        1 : { 1} max : 1
+        3 : pop 1 & push 3; no need to keep one since we had a max element; so 1 never going to max element than 3: {3} max : 3
+        -1 : {3, -1} ==> max : 3
+        -3 : {3, -1, -3} max: 3
+        5 : -3 < 5 remove -1 < 5 remove ; {5} max: 5
+        3 : {5, 3}
+        6 : 3 < 6 pop; 5 < 6 pop; {6}
+        7 : {7} 
+    */
         int n = nums.length;
-        int[] ans = new int[n-k + 1];
+        
+        int max = 0;
+        int [] ans = new int[n-k+1];
+        Deque<Integer> q = new ArrayDeque<>();
+        
         int j = 0;
-        for(int i = 0; i < nums.length; ++i){
-            //check if your dq has k elements : index range is: i - k to i (i: 4 then last index in the window is 2; <= 1 pop from dq)
-            if(!dq.isEmpty() && dq.peekFirst() <= i-k)
-                dq.pollFirst();
+        for(int i = 0; i < n; ++i){
+            //remove out of window elements
+            if(!q.isEmpty() && q.peekFirst() <= i - k)
+                q.pollFirst();
             
-            //dq elements are stored in decresing order;
-            //say dq has 1 and incoming is 3: there is no point of storing 1 in the queue as we need maximum and 1 cant be max when 3 is present
-            while(!dq.isEmpty() && nums[dq.peekLast()] <= nums[i]){
-                dq.pollLast();
+            //remove minimal & equal 
+            while(!q.isEmpty() && nums[q.peekLast()] <= nums[i]){
+                q.pollLast();
             }
-            dq.offerLast(i);
-            //now answer for each window
-            //answers need to collect from i = k-1
-            if(i >= k-1){
-                ans[j++] = nums[dq.peekFirst()];
+            q.offerLast(i);
+
+            if(i >= k -1){
+                ans[j++] = nums[q.peekFirst()];
             }
         }
-    return ans;    
+    return ans;
+        
     }
 }
