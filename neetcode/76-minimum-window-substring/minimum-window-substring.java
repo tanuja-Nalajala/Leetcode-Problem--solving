@@ -1,35 +1,39 @@
 class Solution {
     public String minWindow(String s, String t) {
-        int m = s.length();
-        int n = t.length();
-        int minLength = Integer.MAX_VALUE, start_indx = -1, counter = 0;
         Map<Character, Integer> mp = new HashMap<>();
-        for(int i = 0; i < n; ++i){
-            mp.put(t.charAt(i), mp.getOrDefault(t.charAt(i), 0)+1);
+        for(char ch : t.toCharArray()){ //tc : o(t.length)
+            mp.put(ch, mp.getOrDefault(ch, 0)+1); //o(t.length)
         }
+
         int l = 0, r = 0;
-        while(r < m){
+        int counter = 0;
+        int minLength = Integer.MAX_VALUE;
+        int startIdx = -1;
+        //intuition for each char found in s, decrement counter in t, and track of how many char match found;
+        //when a all occurrneces found (charmatch counter == t.length)=> store this as possible string
+        //now i will decrement my l pointer until my valid counter exists
+         while(r < s.length()){ //o)n
             char rc = s.charAt(r);
-            if(mp.getOrDefault(rc, 0) > 0)
+            if(mp.getOrDefault(rc,0) > 0){
+                //matching char found
                 counter++;
+            }
+            //decrement counter
             mp.put(rc, mp.getOrDefault(rc, 0)-1);
             while(counter == t.length()){
-                //we found substring with t; but will check for minimum by  shrinking from l
-                if(minLength > r - l + 1){
+                if(r - l + 1 < minLength){
                     minLength = r - l + 1;
-                    start_indx = l;
+                    startIdx = l;
                 }
+            //decrement l pointer to find minimum substring in the current window
                 char lc = s.charAt(l);
-                mp.put(lc, mp.getOrDefault(lc, 0) + 1);
-                if(mp.get(lc) > 0){
-                    //means we losing a match
+                mp.put(lc, mp.getOrDefault(lc, 0)+1);
+                if(mp.get(lc) > 0)
                     counter--;
-                }
                 l++;
             }
-        r++;
+            r++;
         }
-        return start_indx == -1 ? "":s.substring(start_indx, start_indx + minLength);
-
+        return startIdx == -1 ? "" : s.substring(startIdx, startIdx + minLength);
     }
 }
